@@ -7,6 +7,18 @@ defmodule Maybe.Global do
 			def to_integer(some) when is_binary(some) do
 				case Integer.parse(some) do
 					{int, ""} -> int
+					_ -> case Float.parse(some) do
+							{fl, ""} -> case to_integer(fl) do
+											some_int when is_integer(some_int) -> some_int
+											_ -> some
+										end
+							_ -> some
+						 end
+				end
+			end
+			def to_integer(some) when is_float(some) do
+				case some |> to_string |> Integer.parse do
+					{int, _} when (some == int) -> int
 					_ -> some
 				end
 			end

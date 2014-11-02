@@ -10,7 +10,9 @@ defmodule MaybeTest do
     assert [123] == Maybe.to_integer([123])
     assert {123} == Maybe.to_integer({123})
     assert :qwe == Maybe.to_integer(:qwe)
-    assert "123 qwe" == Maybe.to_float("123 qwe")
+    assert "123 qwe" == Maybe.to_integer("123 qwe")
+    assert "12.12" == Maybe.to_integer("12.12")
+    assert 12 == Maybe.to_integer("12.0")
   end
 
   test "to_float" do
@@ -24,6 +26,7 @@ defmodule MaybeTest do
     assert :qwe == Maybe.to_float(:qwe)
     assert -0.123 == Maybe.to_float("-0.123")
     assert "123.2 qwe" == Maybe.to_float("123.2 qwe")
+    assert 12.0 == Maybe.to_float(12)
   end
 
   test "to_number" do
