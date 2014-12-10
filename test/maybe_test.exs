@@ -51,5 +51,13 @@ defmodule MaybeTest do
   	assert "qwe" == Maybe.maybe_to_string(:qwe)
   end
 
+  test "to_map" do
+    assert %{} == Maybe.to_map([])
+    assert %{we: "we", qwe: 1} == Maybe.to_map([qwe: 1, we: "we"])
+    assert 1 == Maybe.to_map(1)
+    assert 'azaza' == Maybe.to_map('azaza')
+    assert [{"key", 123}] == Maybe.to_map([{"key", 123}])
+  end
+
 
 end

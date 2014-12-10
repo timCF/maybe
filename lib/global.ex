@@ -85,6 +85,14 @@ defmodule Maybe.Global do
 			end
 
 
+			def to_map(some) when is_list(some) do
+				case HashUtils.is_hash?(some) do
+					true -> HashUtils.to_map(some)
+					false -> some
+				end
+			end
+			def to_map(some), do: some
+
 
 		end
 	end
