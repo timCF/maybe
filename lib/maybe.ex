@@ -41,6 +41,16 @@ defmodule Maybe do
       _ -> some
     end
   end
+  def to_integer(some) when is_list(some) do
+    case maybe_to_string(some) do
+      lst when is_list(lst) -> some
+      bin when is_binary(bin) ->
+        case to_integer(bin) do
+          int when is_integer(int) -> int
+          _ -> some
+        end
+    end
+  end
   def to_integer(some), do: some
   
 
@@ -56,6 +66,16 @@ defmodule Maybe do
     case some |> to_string |> to_float do
       fl when is_float(fl) -> fl
       _ -> some
+    end
+  end
+  def to_float(some) when is_list(some) do
+    case maybe_to_string(some) do
+      lst when is_list(lst) -> some
+      bin when is_binary(bin) ->
+        case to_float(bin) do
+          fl when is_float(fl) -> fl
+          _ -> some
+        end
     end
   end
   def to_float(some), do: some
@@ -74,6 +94,12 @@ defmodule Maybe do
 
   def to_atom(some) when is_binary(some), do: String.to_atom(some)
   def to_atom(some) when is_number(some), do: some |> to_string |> String.to_atom
+  def to_atom(some) when is_list(some) do
+    case maybe_to_string(some) do
+      bin when is_binary(bin) -> String.to_atom(bin)
+      _ -> some
+    end
+  end
   def to_atom(some), do: some
   
   
