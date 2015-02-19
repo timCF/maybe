@@ -47,8 +47,11 @@ defmodule MaybeTest do
   end
 
   test "maybe_to_string" do
-  	assert [] == Maybe.maybe_to_string([])
+  	assert "" == Maybe.maybe_to_string([])
   	assert "qwe" == Maybe.maybe_to_string(:qwe)
+    assert [1232323232,22,43] == Maybe.maybe_to_string([1232323232,22,43])
+    assert [nil, :atom, "string"] == Maybe.maybe_to_string([nil, :atom, "string"])
+    assert "I am string" == Maybe.maybe_to_string('I am string')
   end
 
   test "to_map" do
