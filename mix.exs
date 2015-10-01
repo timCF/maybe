@@ -4,7 +4,7 @@ defmodule Maybe.Mixfile do
   def project do
     [app: :maybe,
      version: "0.0.1",
-     elixir: "~> 1.0.0",
+     elixir: "~> 1.1.0",
      deps: deps]
   end
 

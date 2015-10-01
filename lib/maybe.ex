@@ -107,7 +107,7 @@ defmodule Maybe do
   def maybe_to_string(some) when (is_number(some) or is_atom(some)), do: some |> to_string
   def maybe_to_string(some) when (is_list(some)) do
     try do
-      List.to_string(some)
+      :erlang.list_to_binary(some)
     rescue
       _ -> some
     catch
