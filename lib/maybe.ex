@@ -30,8 +30,8 @@ defmodule Maybe do
     end
   end
   def to_integer(some) when is_float(some) do
-    case some |> to_string |> Integer.parse do
-      {int, _} when (some == int) -> int
+    case round(some) do
+      int when (some == int) -> int
       _ -> some
     end
   end
@@ -52,9 +52,9 @@ defmodule Maybe do
     end
   end
   def to_integer(some), do: some
-  
 
-  
+
+
   def to_float(some) when is_integer(some), do: some / 1
   def to_float(some) when is_binary(some) do
     case Float.parse(some) do
@@ -88,7 +88,7 @@ defmodule Maybe do
       ^some -> to_float(some)
     end
   end
-  
+
 
 
 
@@ -101,9 +101,9 @@ defmodule Maybe do
     end
   end
   def to_atom(some), do: some
-  
-  
-  
+
+
+
   def maybe_to_string(some) when (is_number(some) or is_atom(some)), do: some |> to_string
   def maybe_to_string(some) when (is_list(some)) do
     try do

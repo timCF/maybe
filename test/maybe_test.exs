@@ -16,6 +16,9 @@ defmodule MaybeTest do
     assert 123 == Maybe.to_integer('123')
     assert 123 == Maybe.to_integer('0123')
     assert 123 == Maybe.to_integer('0123.0')
+	assert 100 == Maybe.to_integer(1.0e2)
+	assert 100 == Maybe.to_integer('1.0e2')
+	assert 100 == Maybe.to_integer("1.0e2")
     assert [nil, :atom, "string"] == Maybe.to_integer([nil, :atom, "string"])
   end
 
