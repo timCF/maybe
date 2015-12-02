@@ -70,6 +70,9 @@ defmodule MaybeTest do
     assert [1232323232,22,43] == Maybe.maybe_to_string([1232323232,22,43])
     assert [nil, :atom, "string"] == Maybe.maybe_to_string([nil, :atom, "string"])
     assert "I am string" == Maybe.maybe_to_string('I am string')
+	assert "1.033" == Maybe.maybe_to_string(1.033, %{decimals: 10})
+	assert "1.033" == Maybe.maybe_to_string(1.033, %{decimals: 3})
+	assert "1.03" == Maybe.maybe_to_string(1.033, %{decimals: 2})
   end
 
   test "to_map" do
