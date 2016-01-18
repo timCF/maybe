@@ -73,6 +73,8 @@ defmodule MaybeTest do
 	assert "1.033" == Maybe.maybe_to_string(1.033, %{decimals: 10}) |> Maybe.to_float |> Maybe.maybe_to_string(%{decimals: 10})
 	assert "1.033" == Maybe.maybe_to_string(1.033, %{decimals: 3}) |> Maybe.to_float |> Maybe.maybe_to_string(%{decimals: 3})
 	assert "1.03" == Maybe.maybe_to_string(1.033, %{decimals: 2}) |> Maybe.to_float |> Maybe.maybe_to_string(%{decimals: 2})
+	assert "1" == Maybe.maybe_to_string(1.000, %{decimals: 3}) |> Maybe.to_float |> Maybe.maybe_to_string(%{decimals: 3})
+	assert "-7" == Maybe.maybe_to_string(-7.000, %{decimals: 3}) |> Maybe.to_float |> Maybe.maybe_to_string(%{decimals: 3})
   end
 
   test "to_map" do

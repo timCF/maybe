@@ -107,10 +107,13 @@ defmodule Maybe do
 	def maybe_to_string(atom, _) when is_atom(atom), do: Atom.to_string(atom)
 	def maybe_to_string(int, _) when is_integer(int), do: Integer.to_string(int)
 	def maybe_to_string(float, %{decimals: decimals}) when is_float(float) and is_integer(decimals) and (decimals > 0) do
-		Float.to_string(float, [decimals: decimals])
-		|> String.codepoints
-		|> Enum.reverse
-		|> Enum.drop_while(&(&1 == "0"))
+		case	Float.to_string(float, [decimals: decimals])
+				|> String.codepoints
+				|> Enum.reverse
+				|> Enum.drop_while(&(&1 == "0")) do
+			["."|rest] -> rest
+			rest -> rest
+		end
 		|> Enum.reverse
 		|> Enum.join
 	end
