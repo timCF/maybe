@@ -85,5 +85,28 @@ defmodule MaybeTest do
     assert [{"key", 123}] == Maybe.to_map([{"key", 123}])
   end
 
+	defstruct [
+		int: 123,
+		float: 123.2,
+		number: 11,
+		string: "baz",
+		atom: :qwe,
+		map: %{1 => 2}
+	]
+
+	test "to_struct" do
+		assert %MaybeTest{} == Maybe.to_struct(%{},%MaybeTest{},%Maybe{})
+		raw = %{int: :"1", float: :"1", number: "1", string: 3.3333333, atom: "we", map: [foo: 1]}
+		opts = %Maybe{
+					to_integer: [:int],
+					to_float: [:float],
+					to_number: [:number],
+					to_atom: [:atom],
+					to_string: [:string],
+					to_map: [:map],
+					decimals: 2
+				}
+		assert %MaybeTest{int: 1, float: 1.0, number: 1, string: "3.33", atom: :we, map: %{foo: 1}} == Maybe.to_struct(raw, %MaybeTest{}, opts)
+	end
 
 end

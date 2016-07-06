@@ -1,6 +1,16 @@
 defmodule Maybe do
   use Application
 
+	defstruct [
+		to_integer: [],
+		to_float: [],
+		to_number: [],
+		to_atom: [],
+		to_string: [],
+		to_map: [],
+		decimals: 3
+	]
+
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -137,5 +147,42 @@ defmodule Maybe do
 		end
 	end
 	def to_map(some), do: some
+
+	def to_struct(some, struct, opts \\ %Maybe{})
+	def to_struct(some, struct = %{:__struct__ => _}, opts = %Maybe{}) do
+		keys = Map.from_struct(struct) |> Map.keys
+		case to_map(some) do
+			some = %{} ->
+				Enum.reduce(keys, struct, fn(k, acc) ->
+					case Map.has_key?(some, k)  do
+						true -> Map.update!(acc, k, fn(_) -> to_struct_transform(k, Map.get(some, k), opts) end)
+						false -> acc
+					end
+				end)
+			_ ->
+				some
+		end
+	end
+
+	defp to_struct_transform(key, val, opts = %Maybe{}) do
+		Map.from_struct(opts)
+		|> Enum.reduce(val, fn
+			{:to_integer, lst}, val -> maybe_apply(key, val, lst, &to_integer/1)
+			{:to_float, lst}, val -> maybe_apply(key, val, lst, &to_float/1)
+			{:to_number, lst}, val -> maybe_apply(key, val, lst, &to_number/1)
+			{:to_atom, lst}, val -> maybe_apply(key, val, lst, &to_atom/1)
+			{:to_string, lst}, val -> maybe_apply(key, val, lst, &(maybe_to_string(&1, opts)))
+			{:to_map, lst}, val -> maybe_apply(key, val, lst, &to_map/1)
+			{_,_}, val -> val
+		end)
+	end
+
+	defp maybe_apply(key, val, lst = [_|_], func) do
+		case Enum.member?(lst, key) do
+			true -> func.(val)
+			false -> val
+		end
+	end
+	defp maybe_apply(_, val, _, _), do: val
 
 end
