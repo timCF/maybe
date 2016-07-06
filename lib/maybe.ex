@@ -150,10 +150,10 @@ defmodule Maybe do
 
 	def to_struct(some, struct, opts \\ %Maybe{})
 	def to_struct(some, struct = %{:__struct__ => _}, opts = %Maybe{}) do
-		keys = Map.from_struct(struct) |> Map.keys
 		case to_map(some) do
 			some = %{} ->
-				Enum.reduce(keys, struct, fn(k, acc) ->
+				Map.from_struct(struct)
+				|> Enum.reduce(struct, fn({k, _}, acc) ->
 					case Map.has_key?(some, k)  do
 						true -> Map.update!(acc, k, fn(_) -> to_struct_transform(k, Map.get(some, k), opts) end)
 						false -> acc
