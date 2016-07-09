@@ -91,12 +91,14 @@ defmodule MaybeTest do
 		number: 11,
 		string: "baz",
 		atom: :qwe,
-		map: %{1 => 2}
+		map: %{1 => 2},
+		boolean1: nil,
+		boolean2: nil
 	]
 
 	test "to_struct" do
 		assert %MaybeTest{} == Maybe.to_struct(%{},%MaybeTest{},%Maybe{})
-		raw = %{int: :"1", float: :"1", number: "1", string: 3.3333333, atom: "we", map: [foo: 1]}
+		raw = %{int: :"1", float: :"1", number: "1", string: 3.3333333, atom: "we", map: [foo: 1], boolean1: 1, boolean2: 0}
 		opts = %Maybe{
 					to_integer: [:int],
 					to_float: [:float],
@@ -104,9 +106,10 @@ defmodule MaybeTest do
 					to_atom: [:atom],
 					to_string: [:string],
 					to_map: [:map],
+					to_boolean: [:boolean1, :boolean2],
 					decimals: 2
 				}
-		assert %MaybeTest{int: 1, float: 1.0, number: 1, string: "3.33", atom: :we, map: %{foo: 1}} == Maybe.to_struct(raw, %MaybeTest{}, opts)
+		assert %MaybeTest{int: 1, float: 1.0, number: 1, string: "3.33", atom: :we, map: %{foo: 1}, boolean1: true, boolean2: false} == Maybe.to_struct(raw, %MaybeTest{}, opts)
 	end
 
 end

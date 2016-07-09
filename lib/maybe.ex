@@ -8,6 +8,7 @@ defmodule Maybe do
 		to_atom: [],
 		to_string: [],
 		to_map: [],
+		to_boolean: [],
 		decimals: 3
 	]
 
@@ -164,6 +165,12 @@ defmodule Maybe do
 		end
 	end
 
+	def to_boolean(1), do: true
+	def to_boolean(0), do: false
+	def to_boolean(nil), do: false
+	def to_boolean(:undefined), do: false
+	def to_boolean(some), do: some
+
 	defp to_struct_transform(key, val, opts = %Maybe{}) do
 		Map.from_struct(opts)
 		|> Enum.reduce(val, fn
@@ -173,6 +180,7 @@ defmodule Maybe do
 			{:to_atom, lst}, val -> maybe_apply(key, val, lst, &to_atom/1)
 			{:to_string, lst}, val -> maybe_apply(key, val, lst, &(maybe_to_string(&1, opts)))
 			{:to_map, lst}, val -> maybe_apply(key, val, lst, &to_map/1)
+			{:to_boolean, lst}, val -> maybe_apply(key, val, lst, &to_boolean/1)
 			{_,_}, val -> val
 		end)
 	end
