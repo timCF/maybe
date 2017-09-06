@@ -112,4 +112,9 @@ defmodule MaybeTest do
 		assert %MaybeTest{int: 1, float: 1.0, number: 1, string: "3.33", atom: :we, map: %{foo: 1}, boolean1: true, boolean2: false} == Maybe.to_struct(raw, %MaybeTest{}, opts)
 	end
 
+  test "to_boolean" do
+    assert true == Maybe.to_boolean("true")
+    assert false == Maybe.to_boolean("false") 
+  end
+
 end

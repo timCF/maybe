@@ -169,6 +169,8 @@ defmodule Maybe do
 	def to_boolean(0), do: false
 	def to_boolean(nil), do: false
 	def to_boolean(:undefined), do: false
+  def to_boolean("true"), do: true
+  def to_boolean("false"), do: false
 	def to_boolean(some), do: some
 
 	defp to_struct_transform(key, val, opts = %Maybe{}) do
