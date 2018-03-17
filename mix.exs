@@ -5,7 +5,23 @@ defmodule Maybe.Mixfile do
     [app: :maybe,
      version: "0.0.1",
      #elixir: "~> 1.1.0",
-     deps: deps()]
+     deps: deps(),
+
+     description: "Type conversions without exceptions",
+     source_url: "https://github.com/timCF/maybe",
+     package: [
+       licenses: ["Apache 2.0"],
+       maintainers: ["Ilja Tkachuk aka timCF"],
+       links: %{
+         "GitHub" => "https://github.com/timCF/maybe",
+         "Author's home page" => "https://timcf.github.io/"
+       }
+     ],
+     # Docs
+     name: "Maybe",
+     docs: [main: "Maybe", extras: ["README.md"]],
+
+    ]
   end
 
   # Configuration for the OTP application
